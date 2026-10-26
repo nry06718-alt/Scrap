@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>سكراب</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap">
+<style>
+:root{--bg:#f3f5f4;--card:#fff;--ink:#17201c;--mute:#667570;--line:#e1e6e3;--acc:#0e8a62;--accink:#fff;--ok:#0e8a62;--warn:#b45a14;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121815;--card:#1c2521;--ink:#eef3f0;--mute:#9aa7a1;--line:#2e3a34;--acc:#2fc491;--accink:#0b1a14;--ok:#2fc491;--warn:#f0a574;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121815;--card:#1c2521;--ink:#eef3f0;--mute:#9aa7a1;--line:#2e3a34;--acc:#2fc491;--accink:#0b1a14;--ok:#2fc491;--warn:#f0a574;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+:root{padding-top:env(safe-area-inset-top,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font-family:Tajawal,system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;font-size:16px;line-height:1.6}
+.wrap{max-width:560px;margin:0 auto;padding:16px 16px 110px}
+.logo{font-weight:800;font-size:26px;color:var(--acc);margin:0 0 14px}
+h2{font-size:22px;margin:0 0 4px}
+h3{font-size:17px;margin:0}
+.mute{color:var(--mute);font-size:14px}
+.card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:12px;border:1px solid var(--line)}
+.head{cursor:pointer}
+.r1{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.p{font-weight:800;font-size:18px;color:var(--acc);white-space:nowrap}
+.sum{font-size:14px;margin-top:2px}
+.st{font-size:13px;font-weight:700;margin-top:6px}
+.st.ok{color:var(--ok)}.st.warn{color:var(--warn)}
+.det{border-top:1px solid var(--line);margin-top:12px;padding-top:12px}
+.it{display:flex;justify-content:space-between;padding:6px 0;font-size:15px}
+.btn{border:0;background:var(--acc);color:var(--accink);font:inherit;font-weight:800;padding:11px 18px;border-radius:12px;cursor:pointer}
+.btn.line{background:none;border:1px solid var(--line);color:var(--ink);font-weight:700}
+.btn.full{width:100%}
+a.btn{display:block;text-align:center;text-decoration:none;margin-top:10px}
+.lnk{background:none;border:0;color:var(--mute);font:inherit;font-size:13px;text-decoration:underline;cursor:pointer;padding:6px 0}
+.row{display:flex;gap:10px;align-items:center}
+.row>input{flex:1}
+.sp{justify-content:space-between}
+label{display:block;font-size:14px;font-weight:700;margin:14px 0 5px}
+input,select,textarea{width:100%;font:inherit;padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+input[type=checkbox]{width:20px;height:20px}
+input:disabled{opacity:.4}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:12px}
+.chip{flex:none;border:0;background:var(--card);color:var(--ink);font:inherit;font-size:15px;font-weight:700;padding:7px 16px;border-radius:99px;cursor:pointer;border:1px solid var(--line)}
+.chip.on{background:var(--acc);color:var(--accink);border-color:var(--acc)}
+.thumbs{display:flex;gap:8px;overflow-x:auto;margin-bottom:10px}
+.thumbs div{position:relative;flex:none}
+.thumbs img{width:96px;height:96px;object-fit:cover;border-radius:12px;display:block}
+.thumbs button{position:absolute;top:4px;left:4px;border:0;border-radius:50%;width:24px;height:24px;background:#000a;color:#fff;cursor:pointer}
+.win{background:color-mix(in srgb,var(--acc) 14%,transparent);border-radius:12px;padding:12px;margin-top:10px}
+.cm{font-size:14px;padding:4px 0}
+.sec{font-weight:800;font-size:14px;margin:16px 0 6px}
+.item{border-top:1px solid var(--line);padding-top:6px;margin-top:10px}
+.empty{text-align:center;color:var(--mute);padding:40px 0}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);display:flex;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))}
+nav button{flex:1;border:0;background:none;color:var(--mute);font:inherit;font-weight:700;font-size:13px;padding:6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:0}
+nav button span{font-size:22px;line-height:1.3}
+nav button.on{color:var(--acc)}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">♻ سكراب</div>
+  <div id="app"></div>
+  <div style="text-align:center;margin-top:20px"><button class="lnk" onclick="resetAll()">إعادة البيانات التجريبية</button></div>
+</div>
+<nav>
+  <button id="n-buy" onclick="setRole('buy')"><span>🔍</span>تصفح</button>
+  <button id="n-sell" onclick="setRole('sell')"><span>➕</span>بيع</button>
+  <button id="n-me" onclick="setRole('me')"><span>👤</span>حسابي</button>
+</nav>
+<script>
+var TYPES={"حديد":"🔩","نحاس":"🟠","ألمنيوم":"🥫","كراتين وورق":"📦","بلاستيك":"♻️","بطاريات":"🔋","أخرى":"🧰"};
+var CITIES=["الرياض","جدة","الدمام","مكة","المدينة","القصيم"];
+function seed(){return{role:"buy",open:false,f:"الكل",ex:0,nid:100,acct:{name:"",phone:"",vp:false,otp:false,vi:false,vc:false},items:[
+{id:1,city:"الرياض",note:"حديد تسليح زوائد مشروع، نظيف",seller:"ورشة المعمار",phone:"0501230001",badges:{vp:1,vi:1,vc:1},photos:[],items:[{type:"حديد",name:"",qty:2,unit:"طن",price:1400,open:false}],offers:[],comments:[{who:"أبو خالد",text:"كم أقل سعر للطن؟"},{who:"ورشة المعمار (البائع)",text:"سوم وأنا أرد عليك"}]},
+{id:2,city:"جدة",note:"أسلاك وشبابيك قديمة",seller:"أبو فهد",phone:"0501230002",badges:{vp:1},photos:[],items:[{type:"نحاس",name:"",qty:150,unit:"كجم",price:22,open:false},{type:"ألمنيوم",name:"",qty:400,unit:"كجم",price:0,open:true}],offers:[],comments:[]},
+{id:3,city:"الدمام",note:"من تفكيك محل",seller:"مقاولات النخيل",phone:"0501230003",badges:{vp:1,vi:1},photos:[],items:[{type:"أخرى",name:"مكيفات سبليت تالفة",qty:6,unit:"قطعة",price:0,open:true}],offers:[],comments:[]},
+{id:5,mine:1,city:"الرياض",note:"زوائد من تفكيك مستودع",seller:"أنا",phone:"",badges:{},photos:[],items:[{type:"حديد",name:"",qty:800,unit:"كجم",price:1.3,open:false},{type:"ألمنيوم",name:"",qty:120,unit:"كجم",price:0,open:true}],offers:[{id:51,buyer:"مصنع الحديد الوطني",price:1500,phone:"0551110011"},{id:52,buyer:"تجار الخردة",price:1350,phone:"0552220022"}],comments:[{who:"مؤسسة الراشد",text:"هل الحديد فيه صدأ؟"}]}
+]}}
+var S=null,D=null;
+try{var raw=localStorage.getItem("scrap_v2");if(raw)S=JSON.parse(raw)}catch(e){}
+if(!S)S=seed();
+function save(){try{localStorage.setItem("scrap_v2",JSON.stringify(S))}catch(e){}}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function fmt(n){return Number(n).toLocaleString("en-US",{maximumFractionDigits:2})}
+function L(id){return S.items.filter(function(x){return x.id==id})[0]}
+function nm(){return S.acct.name||"مستخدم"}
+function setRole(r){S.role=r;S.open=false;S.ex=0;save();render();window.scrollTo(0,0)}
+function setF(f){S.f=f;save();render()}
+function ex(id){S.ex=S.ex==id?0:id;save();render()}
+function resetAll(){S=seed();D=null;save();render()}
+function ask(l){var t=0;for(var i=0;i<l.items.length;i++){var x=l.items[i];if(x.open)return null;t+=x.qty*x.price}return t}
+function iname(x){return x.type=="أخرى"?x.name:x.type}
+function title(l){return l.items.map(iname).join(" + ")}
+/* account */
+function aset(k,v){S.acct[k]=v;if(k=="phone"){S.acct.vp=false;S.acct.otp=false}save()}
+function sendOtp(){if(!/^05\d{8}$/.test(S.acct.phone)){alert("اكتب رقم جوال سعودي صحيح يبدأ بـ 05");return}S.acct.otp=true;save();render()}
+function verOtp(){if(document.getElementById("otp").value=="1234"){S.acct.vp=true;S.acct.otp=false;save();render()}else alert("الرمز غير صحيح. الرمز التجريبي 1234")}
+function togDoc(k){S.acct[k]=!S.acct[k];save();render()}
+function meView(){
+  var a=S.acct;
+  return '<h2>حسابي</h2><div class="mute">رقمك ما يظهر لأحد إلا بعد قبول العرض.</div>'
+   +'<div class="card" style="margin-top:14px"><label style="margin-top:0">الاسم أو اسم المؤسسة</label><input value="'+esc(a.name)+'" oninput="aset(\'name\',this.value)">'
+   +'<label>رقم الجوال</label><input type="tel" inputmode="numeric" maxlength="10" placeholder="05xxxxxxxx" value="'+esc(a.phone)+'" oninput="aset(\'phone\',this.value)">'
+   +'<div class="row sp" style="margin-top:14px"><b>'+(a.vp?'✓ الجوال موثق':'الجوال غير موثق')+'</b>'+(a.vp?'':'<button class="btn" onclick="sendOtp()">أرسل الرمز</button>')+'</div>'
+   +(a.otp?'<label>رمز التحقق (تجريبي: 1234)</label><div class="row"><input id="otp" inputmode="numeric" maxlength="4"><button class="btn" onclick="verOtp()">تحقق</button></div>':'')+'</div>'
+   +'<div class="sec">توثيق إضافي (اختياري)</div>'
+   +'<div class="card"><div class="row sp"><b>الهوية الوطنية</b><button class="btn'+(a.vi?' line':'')+'" onclick="togDoc(\'vi\')">'+(a.vi?'✓ موثقة':'وثّق')+'</button></div>'
+   +'<div class="row sp" style="margin-top:12px"><b>السجل التجاري</b><button class="btn'+(a.vc?' line':'')+'" onclick="togDoc(\'vc\')">'+(a.vc?'✓ موثق':'أضف')+'</button></div></div>';
+}
+/* draft */
+function row(){return{type:"حديد",name:"",qty:"1",unit:"كجم",price:"",open:false}}
+function newDraft(){return{items:[row()],photos:[],city:"الرياض",note:""}}
+function dI(i,k,v){D.items[i][k]=v}
+function dT(k,v){D[k]=v}
+function chg(i,k,v){D.items[i][k]=v;render()}
+function addRow(){D.items.push(row());render()}
+function delRow(i){D.items.splice(i,1);render()}
+function delPh(i){D.photos.splice(i,1);render()}
+function toggleForm(){S.open=!S.open;if(S.open&&!D)D=newDraft();render()}
+function addPhotos(fs){
+  Array.prototype.slice.call(fs).forEach(function(f){
+    if(D.photos.length>=4)return;
+    var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){
+      var s=Math.min(1,700/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*s;c.height=im.height*s;
+      c.getContext("2d").drawImage(im,0,0,c.width,c.height);D.photos.push(c.toDataURL("image/jpeg",.7));render()};im.src=r.result};r.readAsDataURL(f)});
+}
+function publish(){
+  if(!S.acct.vp){alert("وثّق رقم جوالك أولاً من تبويب حسابي");return}
+  var its=[];
+  for(var i=0;i<D.items.length;i++){var x=D.items[i],q=parseFloat(x.qty),p=parseFloat(x.price);
+    if(!(q>0)){alert("اكتب الكمية للسلعة "+(i+1));return}
+    if(x.type=="أخرى"&&!x.name.trim()){alert("اكتب اسم السلعة "+(i+1));return}
+    if(!x.open&&!(p>0)){alert("حدد سعر السلعة "+(i+1)+" أو فعّل على السوم");return}
+    its.push({type:x.type,name:x.name.trim(),qty:q,unit:x.unit,price:x.open?0:p,open:x.open});}
+  var a=S.acct;
+  S.items.unshift({id:S.nid++,mine:1,city:D.city,note:D.note,seller:a.name||"أنا",phone:a.phone,badges:{vp:a.vp,vi:a.vi,vc:a.vc},photos:D.photos,items:its,offers:[],comments:[]});
+  S.open=false;D=null;save();render();
+}
+function formView(){
+  var h='<div class="card">';
+  D.items.forEach(function(x,i){
+    h+='<div'+(i?' class="item"':'')+'>'+(D.items.length>1?'<div class="row sp"><b>سلعة '+(i+1)+'</b><button class="lnk" onclick="delRow('+i+')">حذف</button></div>':'')
+     +'<label style="margin-top:'+(i?6:0)+'px">النوع</label><select onchange="chg('+i+',\'type\',this.value)">'+Object.keys(TYPES).map(function(t){return'<option'+(x.type==t?' selected':'')+'>'+t+'</option>'}).join('')+'</select>'
+     +(x.type=="أخرى"?'<label>اسم السلعة</label><input value="'+esc(x.name)+'" placeholder="مثلاً: مكيفات، موتورات" oninput="dI('+i+',\'name\',this.value)">':'')
+     +'<div class="g2"><div><label>الكمية</label><input type="number" min="0" step="any" inputmode="decimal" value="'+esc(x.qty)+'" oninput="dI('+i+',\'qty\',this.value)"></div>'
+     +'<div><label>الوحدة</label><select onchange="dI('+i+',\'unit\',this.value)">'+["كجم","طن","قطعة"].map(function(u){return'<option'+(x.unit==u?' selected':'')+'>'+u+'</option>'}).join('')+'</select></div></div>'
+     +'<label>السعر للوحدة (ر.س)</label><input type="number" min="0" step="any" inputmode="decimal" value="'+esc(x.price)+'"'+(x.open?' disabled':'')+' oninput="dI('+i+',\'price\',this.value)">'
+     +'<label class="row" style="font-weight:500;margin-top:10px"><input type="checkbox"'+(x.open?' checked':'')+' onchange="chg('+i+',\'open\',this.checked)">على السوم</label></div>';
+  });
+  h+='<button class="btn line full" style="margin-top:14px" onclick="addRow()">+ سلعة ثانية</button>'
+   +'<div class="sec">صور (اختياري)</div>'+(D.photos.length?'<div class="thumbs">'+D.photos.map(function(p,i){return'<div><img src="'+p+'" alt="صورة"><button onclick="delPh('+i+')" aria-label="حذف">×</button></div>'}).join('')+'</div>':'')
+   +(D.photos.length<4?'<label class="btn line full" style="margin:0;text-align:center;cursor:pointer">📷 صوّر السلعة<input type="file" accept="image/*" capture="environment" hidden onchange="addPhotos(this.files);this.value=\'\'"></label>':'')
+   +'<label>المدينة</label><select onchange="dT(\'city\',this.value)">'+CITIES.map(function(c){return'<option'+(D.city==c?' selected':'')+'>'+c+'</option>'}).join('')+'</select>'
+   +'<label>ملاحظة (اختياري)</label><textarea rows="2" maxlength="140" oninput="dT(\'note\',this.value)">'+esc(D.note)+'</textarea>'
+   +'<button class="btn full" style="margin-top:16px" onclick="publish()">انشر الطلب</button></div>';
+  return h;
+}
+/* listing actions */
+function sendCm(id){var el=document.getElementById("c-"+id),t=el.value.trim();if(!t)return;
+  var l=L(id);l.comments.push({who:nm()+(l.mine?" (البائع)":""),text:t});save();render()}
+function accept(id,oid){L(id).acc=oid;save();render()}
+function sendOffer(id){
+  if(!S.acct.vp){alert("وثّق رقم جوالك أولاً من تبويب حسابي");return}
+  var p=parseFloat(document.getElementById("p-"+id).value);
+  if(!(p>0)){alert("اكتب سعرك الإجمالي");return}
+  L(id).offers.push({id:S.nid++,buyer:nm(),price:p,phone:S.acct.phone,mine:1});save();render()}
+function fakeAccept(id){var l=L(id),o=l.offers.filter(function(o){return o.mine})[0];l.acc=o.id;save();render()}
+function card(l,mode){
+  var a=ask(l),mo=l.offers.filter(function(o){return o.mine})[0],open=S.ex==l.id;
+  var st=l.acc?["ok",mode=="sell"?"✓ تم البيع":"✓ تم قبول عرضك"]:mode=="sell"?(l.offers.length?["ok",l.offers.length+" عروض"]:["","بدون عروض"]):mo?["warn","عرضك بانتظار البائع"]:null;
+  var h='<div class="card"><div class="head" onclick="ex('+l.id+')"><div class="r1"><h3>'+esc(title(l))+'</h3><span class="p">'+(a===null?'على السوم':fmt(a)+' ر.س')+'</span></div>'
+   +'<div class="mute">'+esc(l.city)+' • '+esc(l.seller)+(l.badges&&l.badges.vp?' ✓':'')+'</div>'
+   +'<div class="sum">'+l.items.map(function(x){return fmt(x.qty)+' '+x.unit+' '+esc(iname(x))}).join("، ")+'</div>'
+   +(st?'<div class="st '+st[0]+'">'+st[1]+'</div>':'')+'</div>';
+  if(open){
+    h+='<div class="det">';
+    if(l.photos&&l.photos.length)h+='<div class="thumbs">'+l.photos.map(function(p){return'<div><img src="'+p+'" alt="صورة السكراب"></div>'}).join('')+'</div>';
+    h+=l.items.map(function(x){return'<div class="it"><span>'+TYPES[x.type]+' '+esc(iname(x))+' • '+fmt(x.qty)+' '+x.unit+'</span><b>'+(x.open?'على السوم':fmt(x.price)+' ر.س/'+x.unit)+'</b></div>'}).join('');
+    if(l.note)h+='<div class="mute" style="margin-top:6px">'+esc(l.note)+'</div>';
+    if(l.badges&&(l.badges.vp||l.badges.vi||l.badges.vc))h+='<div class="mute" style="margin-top:6px">موثق: جوال'+(l.badges.vi?' • هوية':'')+(l.badges.vc?' • سجل تجاري':'')+'</div>';
+    if(mode=="sell"){
+      if(l.acc){var o=l.offers.filter(function(o){return o.id==l.acc})[0];
+        if(o)h+='<div class="win"><b>'+esc(o.buyer)+'</b><div class="mute">'+fmt(o.price)+' ر.س إجمالي</div><a class="btn" href="tel:'+esc(o.phone)+'">اتصل: '+esc(o.phone)+'</a></div>'}
+      else if(l.offers.length){h+='<div class="sec">العروض</div>';
+        l.offers.slice().sort(function(x,y){return y.price-x.price}).forEach(function(o){
+          h+='<div class="row sp" style="padding:6px 0"><div><b>'+esc(o.buyer)+'</b><div class="mute">'+fmt(o.price)+' ر.س إجمالي</div></div><button class="btn" onclick="accept('+l.id+','+o.id+')">اقبل</button></div>'})}
+    }else{
+      if(l.acc)h+='<div class="win"><div class="mute">قبل البائع عرضك ('+fmt(mo.price)+' ر.س)</div><a class="btn" href="tel:'+esc(l.phone)+'">اتصل بالبائع: '+esc(l.phone)+'</a></div>';
+      else if(mo)h+='<div class="mute" style="margin-top:10px">عرضك: '+fmt(mo.price)+' ر.س إجمالي</div><button class="lnk" onclick="fakeAccept('+l.id+')">للتجربة: خلّ البائع يقبل</button>';
+      else h+='<div class="sec">'+(a===null?'اكتب سومك (إجمالي)':'عرضك (إجمالي)')+'</div><div class="row"><input id="p-'+l.id+'" type="number" min="0" step="any" inputmode="decimal" placeholder="ر.س" value="'+(a===null?'':a)+'"><button class="btn" onclick="sendOffer('+l.id+')">أرسل</button></div>';
+    }
+    h+='<div class="sec">التعليقات ('+l.comments.length+')</div>'+l.comments.map(function(c){return'<div class="cm"><b>'+esc(c.who)+':</b> '+esc(c.text)+'</div>'}).join('')
+     +'<div class="row" style="margin-top:8px"><input id="c-'+l.id+'" maxlength="140" placeholder="اسأل أو علّق"><button class="btn line" onclick="sendCm('+l.id+')">إرسال</button></div></div>';
+  }
+  return h+'</div>';
+}
+function sellView(){
+  var h='<h2>بيع سكراب</h2><div class="mute" style="margin-bottom:14px">اعرض كل اللي عندك في طلب واحد.</div>'
+   +'<button class="btn full" style="margin-bottom:16px" onclick="toggleForm()">'+(S.open?'إلغاء':'+ طلب جديد')+'</button>';
+  if(S.open)h+=formView();
+  var m=S.items.filter(function(x){return x.mine});
+  if(m.length)h+='<div class="sec">طلباتي</div>';
+  else if(!S.open)h+='<div class="empty">ما عرضت شيء بعد.</div>';
+  m.forEach(function(x){h+=card(x,"sell")});
+  return h;
+}
+function buyView(){
+  var h='<div class="chips">'+["الكل"].concat(Object.keys(TYPES)).map(function(t){return'<button class="chip'+(S.f==t?' on':'')+'" onclick="setF(\''+t+'\')">'+t+'</button>'}).join('')+'</div>';
+  var n=0;
+  S.items.forEach(function(x){
+    if(x.mine)return;
+    if(S.f!="الكل"&&!x.items.some(function(i){return i.type==S.f}))return;
+    var mo=x.offers.filter(function(o){return o.mine})[0];
+    if(x.acc&&!(mo&&mo.id==x.acc))return;
+    n++;h+=card(x,"buy");
+  });
+  if(!n)h+='<div class="empty">ما فيه عروض من هذا النوع الحين.</div>';
+  return h;
+}
+function render(){
+  ["buy","sell","me"].forEach(function(r){document.getElementById("n-"+r).className=S.role==r?"on":""});
+  document.getElementById("app").innerHTML=S.role=="buy"?buyView():S.role=="sell"?sellView():meView();
+}
+render();
+</script>
+</body>
+</html>
